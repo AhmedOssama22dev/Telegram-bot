@@ -3,7 +3,6 @@ import json
 import os
 import telebot
 import requests
-from pydrive.drive import GoogleDrive
 
 
 API_KEY = os.getenv('API_KEY')
