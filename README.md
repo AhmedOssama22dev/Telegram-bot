@@ -1,5 +1,5 @@
 # Telegram-bot
-This is a simple telegram bot @sessionNotifierBot that can be used by an instructor to :
+This is a simple telegram bot <mark> @sessionNotifierBot </mark> that can be used by an instructor to :
   -start sessions and let students get notified to their telegram channel https://t.me/joinchat/y7-YwLkEs7E2NzQ0
   -Get students data 
   -Search student and get his details
