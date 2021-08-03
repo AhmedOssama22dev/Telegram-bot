@@ -1,5 +1,3 @@
-from datetime import date
-import json
 import os
 import telebot
 import requests
@@ -8,11 +6,11 @@ import requests
 API_KEY = os.getenv('API_KEY')
 bot = telebot.TeleBot(API_KEY)
 PASSWORD = os.getenv('PASSWORD')
-
+base_url = "https://tele-bot-back-end.herokuapp.com/"
 
 @bot.message_handler(commands=['start'])
 def greet(message):
-    bot.reply_to(message, '''Welcome to our bot!\nSome helpful commands:
+    bot.reply_to(message, '''Welcome to our bot!\nSome helpful commands:(YOU MUST TYPE THE PASSWORD AFTER EACH COMMAND)
     \n1)students list [To show all students names]\n2)search (student name or id) [To show a certain student detail\n3)create session (title) (YYYY-MM-DD) (HR:MIN:SEC)]
     ''')
 
@@ -30,7 +28,7 @@ def get_students(message):
 
 @bot.message_handler(func=get_students)
 def reply_get_students(message):
-    students = requests.get("http://127.0.0.1:8000/students/").json()
+    students = requests.get(f"{base_url}students/").json()
     msg = ""
     for student in students:
         msg += str(student['id']) + "]" + student['name'] + '\n'
@@ -59,8 +57,8 @@ def reply_search_student(message):
             name += word
             name += "%20"
         counter += 1
-    name_query = name[:-3]
-    url = f"http://127.0.0.1:8000/students/{name_query}"
+    name_query = name[:-11]
+    url = f"{base_url}students/{name_query}"
     student = requests.get(url).json()
 
     student_data = f"id:{student['id']}\nName: {student['name']}\nEmail: {student['email']}\nContact: {student['number']}\nTelegram id: {student['telegram_id']}"
@@ -92,12 +90,12 @@ def create_new_session(message):
             form_data.append(word)
         counter += 1
 
-    url = "http://127.0.0.1:8000/create/session/"
+    url = f"{base_url}create/session/"
 
     data = {
         'title': form_data[0], 'date': form_data[1], 'time': form_data[2]
     }
-    response = requests.request("POST", url, data=data)
+    requests.request("POST", url, data=data)
     bot.send_message(chat_id='-1001503615060',
                      text=f"A new session has just created: \nTitle:{form_data[0]}\nDate:{form_data[1]}\nTime:{form_data[2]}")
     bot.reply_to(message, "Session scheduled successfully")
