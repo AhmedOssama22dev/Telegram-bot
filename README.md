@@ -6,7 +6,7 @@ This is a simple telegram bot <mark> @sessionNotifierBot </mark> that can be use
   
 Since this is a test version:  PASSWORD: mybot
 
-All requests are calling the API i developed and deployed to heroku : https://tele-bot-back-end.herokuapp.com/
+All requests are calling the API i developed and deployed to heroku 
     <h4>Endpoints:</h4>
     <a href="https://tele-bot-back-end.herokuapp.com/students/"
       >GET all students
